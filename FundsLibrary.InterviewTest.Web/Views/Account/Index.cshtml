@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model FundsLibrary.InterviewTest.Web.Models.LoginModel
+@Html.ValidationMessage("LoginError")
+<div class="loginForm">
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>  login  </legend>
+            <div class="loginFormFields">
+                <p>
+                    @Html.LabelFor(m => m.Username)
+                    @Html.TextBoxFor(m => m.Username)
+                    @Html.ValidationMessageFor(m => m.Username)
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </p>
+            
+                <div class="prefix_6 grid_5">
+                    <p>
+                        <input type="submit" value="Log in" />
+
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+
+    }
+</div>
+
+
