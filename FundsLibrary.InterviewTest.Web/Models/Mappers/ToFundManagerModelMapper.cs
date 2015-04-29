@@ -15,5 +15,17 @@ namespace FundsLibrary.InterviewTest.Web.Models.Mappers
                 Name = obj.Name
             };
         }
+
+        public FundManager ReverseMap(FundManagerModel obj)
+        {
+            return new FundManager
+            {
+                Id = obj.Id,
+                Biography = obj.Biography,
+                Location = obj.Location,
+                ManagedSince = obj.ManagedSince,
+                Name = obj.Name
+            };
+        }
     }
 }

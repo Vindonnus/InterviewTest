@@ -1,14 +1,69 @@
-﻿@model IEnumerable<FundsLibrary.InterviewTest.Web.Models.FundManagerModel>
+﻿@using FundsLibrary.InterviewTest.Common        
+@using PagedList.Mvc
+@model PagedList.IPagedList<FundsLibrary.InterviewTest.Web.Models.FundManagerModel>
+@{
+    ViewBag.Title = "FundManagerList";
+}
 
-<div class="fund-managers">
-    <h1>Fund managers</h1>
+<h2>Fund Managers</h2>
 
-    @foreach (var fundManager in Model)
+ @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
     {
-        <div class="fund-manager">
-            <span class="glyphicon glyphicon-user"></span>
-            @Html.ActionLink(fundManager.Name, "Details", new { Id = fundManager.Id })
-        </div>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
     }
-</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { currentOrder = "Name", sortDirection = SortDirecton.ASC})
+        </th>
+        <th>
+            @Html.ActionLink("ManagedSince", "Index", new { currentOrder = "ManagedSince", sortDirection = SortDirecton.DESC })
+        </th>
+        <th>
+            @Html.ActionLink("Biography", "Index", new { currentOrder = "Biography", sortDirection = SortDirecton.ASC })
+        </th>
+        <th>
+            @Html.ActionLink("Location", "Index", new { currentOrder = "Location", sortDirection = SortDirecton.ASC })
+        </th>
+        <th></th>
+    </tr>
+
+
+   @foreach (var fundManager in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => fundManager.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => fundManager.ManagedSince)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => fundManager.Biography)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => fundManager.Location)
+            </td>
+            <td>
+               @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
+               {
+                    @Html.ActionLink("Edit ", "Edit", new {id = fundManager.Id}) 
+                    @Html.Label("|")
+                }
+                @Html.ActionLink("Details", "Details", new { id = fundManager.Id }) 
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, currentOrder = ViewBag.CurrentSort}))
 

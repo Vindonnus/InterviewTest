@@ -9,6 +9,8 @@ namespace FundsLibrary.InterviewTest.Service.Repositories
     {
         Task<FundManager> GetBy(Guid id);
         Task<IQueryable<FundManager>> GetAll();
+
+        Task<IQueryable<FundManager>> GetPagedFundManager(string currentOrder, SortDirecton sortDirection);
         void Update(Guid id, FundManager fundManager);
         void Delete(Guid id);
         Guid Create(FundManager fundManager);

@@ -31,5 +31,38 @@ namespace FundsLibrary.InterviewTest.Service.Controllers
         {
             return await _repository.GetBy(id);
         }
+
+        /// <summary>
+        /// Get Paged Fund Manager list
+        /// </summary>
+        [Route("api/FundManager/{currentOrder}/{sortDirection}")]
+        public async Task<IEnumerable<FundManager>> GetPagedFundManager(string currentOrder, SortDirecton sortDirection)
+        {
+            return await _repository.GetPagedFundManager(currentOrder, sortDirection);
+        }
+
+        /// <summary>
+        /// Update method added
+        /// </summary>
+        /// <param name="fundManager"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<FundManager> Update(FundManager fundManager)
+        {
+            _repository.Update(fundManager.Id, fundManager);
+            return await _repository.GetBy(fundManager.Id); // TODO: Change this into a TResult?
+        }
+
+        /// <summary>
+        /// Handle the creation of a new fundmanager
+        /// </summary>
+        /// <param name="fundManager"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<FundManager> Create(FundManager fundManager)
+        {
+            _repository.Create(fundManager);
+            return await _repository.GetBy(fundManager.Id); // TODO: Change this into a TResult?
+        }
     }
 }

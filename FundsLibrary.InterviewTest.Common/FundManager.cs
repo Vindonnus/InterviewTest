@@ -12,12 +12,17 @@ namespace FundsLibrary.InterviewTest.Common
     }
 
     public enum Location
-    {
-        London,
-        Amsterdam,
-        NewYork,
+    {       
+        Amsterdam,     
         Frankfurt,
+        London,
         Luxembourg,
+        NewYork,
         Zurich
+    }
+    public enum SortDirecton
+    {
+       ASC,
+       DESC
     }
 }

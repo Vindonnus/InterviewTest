@@ -29,3 +29,7 @@ div.fund-manager-details dl dd
 {
 	margin-bottom: 20px;
 }
+
+.validate {color:#ecf0f1;font-size:.9em;background-color:#e74c3c;padding:10px;}
+.input-validation-error{ background: pink; border: 1px solid red; }
+.field-validation-error{ color: red; font-weight: bold; }

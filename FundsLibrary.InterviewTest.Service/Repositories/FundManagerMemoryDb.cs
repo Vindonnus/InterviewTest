@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 using FundsLibrary.InterviewTest.Common;
@@ -44,6 +45,46 @@ namespace FundsLibrary.InterviewTest.Service.Repositories
         public Task<IQueryable<FundManager>> GetAll()
         {
             return Task.FromResult(_fundManagers.Values.AsQueryable());
+        }
+
+        public Task<IQueryable<FundManager>> GetPagedFundManager(string currentOrder, SortDirecton sortDirection)
+        {
+            var fundManagers = _fundManagers.Values.AsQueryable();
+            switch (currentOrder)
+            {
+                case "Name":
+                    if (sortDirection == SortDirecton.ASC)
+                        fundManagers = fundManagers.OrderBy(x => x.Name);
+                    else
+                        fundManagers = fundManagers.OrderByDescending(x => x.Name);
+                    break;
+                case "Id":
+                    if (sortDirection == SortDirecton.ASC)
+                        fundManagers = fundManagers.OrderBy(x => x.Id);
+                    else
+                        fundManagers = fundManagers.OrderByDescending(x => x.Id);
+                    break;
+                case "ManagedSince":
+                    if (sortDirection == SortDirecton.ASC)
+                        fundManagers = fundManagers.OrderBy(x => x.ManagedSince);
+                    else
+                        fundManagers = fundManagers.OrderByDescending(x => x.ManagedSince);
+                    break;
+                case "Biography":
+                    if (sortDirection == SortDirecton.ASC)
+                        fundManagers = fundManagers.OrderBy(x => x.Biography);
+                    else
+                        fundManagers = fundManagers.OrderByDescending(x => x.Biography);
+                    break;
+                 case "Location":
+                    if (sortDirection == SortDirecton.ASC)
+                        fundManagers = fundManagers.OrderBy(x => x.Location);
+                    else
+                        fundManagers = fundManagers.OrderByDescending(x => x.Location);
+                    break;
+            }
+ 
+            return Task.FromResult(fundManagers.AsQueryable());
         }
 
         public void Update(Guid id, FundManager fundManager)

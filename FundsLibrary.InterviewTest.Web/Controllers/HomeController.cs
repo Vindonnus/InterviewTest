@@ -6,7 +6,7 @@ namespace FundsLibrary.InterviewTest.Web.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "FundManager");
+            return RedirectToAction("Index", "Account");
         }
     }
 }

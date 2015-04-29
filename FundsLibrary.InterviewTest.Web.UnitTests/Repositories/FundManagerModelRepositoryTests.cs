@@ -61,5 +61,73 @@ namespace FundsLibrary.InterviewTest.Web.UnitTests.Repositories
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.EqualTo(fundManagerModel));
         }
+
+        [Test]
+        public async void ShouldCreate()
+        {
+            var mockServiceClient = new Mock<IHttpClientWrapper>();
+            var mockToFundManagerModelMapper = new Mock<IMapper<FundManager, FundManagerModel>>();
+            var guid = Guid.NewGuid();
+            var fundManager = new FundManager();
+            var fundManagerModel = new FundManagerModel()
+            {
+                Biography = "Some",
+                Location = Location.London,
+                ManagedSince = DateTime.Now,
+                Name = "Fred",
+                Id = guid
+            };
+            mockServiceClient
+                .Setup(m => m.GetAndReadFromContentGetAsync<FundManager>("api/FundManager/" + guid))
+                .Returns(Task.FromResult(fundManager));
+     
+            mockToFundManagerModelMapper
+                .Setup(m => m.Map(It.IsAny<FundManager>()))
+                .Returns(fundManagerModel);
+            var repository = new FundManagerModelRepository(
+                mockServiceClient.Object,
+                mockToFundManagerModelMapper.Object);
+
+            var result = await repository.Create(fundManagerModel);
+
+            mockToFundManagerModelMapper.Verify();
+            mockServiceClient.Verify();
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.EqualTo(fundManagerModel));
+        }
+
+        [Test]
+        public async void ShouldEdit()
+        {
+            var mockServiceClient = new Mock<IHttpClientWrapper>();
+            var mockToFundManagerModelMapper = new Mock<IMapper<FundManager, FundManagerModel>>();
+            var guid = Guid.NewGuid();
+            var fundManager = new FundManager();
+            var fundManagerModel = new FundManagerModel()
+            {
+                Biography = "Some1",
+                Location = Location.London,
+                ManagedSince = DateTime.Now,
+                Name = "Fred1",
+                Id = guid
+            };
+            mockServiceClient
+                .Setup(m => m.GetAndReadFromContentGetAsync<FundManager>("api/FundManager/" + guid))
+                .Returns(Task.FromResult(fundManager));
+
+            mockToFundManagerModelMapper
+                .Setup(m => m.Map(It.IsAny<FundManager>()))
+                .Returns(fundManagerModel);
+            var repository = new FundManagerModelRepository(
+                mockServiceClient.Object,
+                mockToFundManagerModelMapper.Object);
+
+            var result = await repository.Update(fundManagerModel);
+
+            mockToFundManagerModelMapper.Verify();
+            mockServiceClient.Verify();
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.EqualTo(fundManagerModel));
+        }
     }
 }

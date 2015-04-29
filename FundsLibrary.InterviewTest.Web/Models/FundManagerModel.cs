@@ -14,7 +14,8 @@ namespace FundsLibrary.InterviewTest.Web.Models
         public string Biography { get; set; }
         public Location Location { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Managed Since")]
         public DateTime ManagedSince { get; set; }
     }
 }
